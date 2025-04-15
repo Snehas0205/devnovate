@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devnovate - Role Selection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* Gradient Background */
+    body {
+      background: linear-gradient(45deg, #a29bfe, #ff9aa2, #b5f5ec, #ffdfba);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      min-height: 100vh;
+      position: relative;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    /* Gradient Text */
+    .gradient-text {
+      font-family: 'Arial', sans-serif;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ff7e95, #ff9a76, #fff700, #6effb5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: gradientText 8s ease infinite;
+    }
+    @keyframes gradientText {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Video Styling */
+    #bgvi-video, #bgv1-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    #bgv1-video {
+      display: none;
+    }
+
+    /* Header Styling */
+    #header {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(to right, #ff7e95, #ff9aa2); /* Matching gradient */
+      padding: 1rem;
+      text-align: center;
+      font-size: 2rem;
+      font-family: 'Arial', sans-serif;
+      color: white;
+      z-index: 10;
+      border-bottom: 4px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Main Content */
+    #main-content {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      position: relative;
+      z-index: 10;
+      margin-top: 5rem;
+      padding: 1rem;
+      max-width: 4xl;
+    }
+
+    /* Role Cards Styling */
+    .role-card {
+      background-color: white;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .role-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* About Button Styling */
+    .about-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background-color: #4a5568; /* Soft gray */
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      z-index: 20;
+    }
+    .about-btn:hover {
+      background-color: #2d3748; /* Slightly darker on hover */
+    }
+
+    /* About Section Styling */
+    #about-section {
+      display: none;
+      position: relative;
+      z-index: 20;
+      background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+      padding: 2rem;
+      border-radius: 0.5rem;
+      margin-top: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Smooth Scroll Behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center relative">
+  <!-- First Video (Intro) -->
+  <video id="bgvi-video" autoplay muted class="absolute inset-0 w-full h-full object-cover z-0">
+    <source src="/static/images/bgvi.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Second Video (Background) -->
+  <video id="bgv1-video" autoplay muted loop class="absolute inset-0 w-full h-full object-cover z-0">
+    <source src="/static/images/bgv1.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Top Header -->
+  <div id="header" class="gradient-text">Welcome To Devnovate</div>
+
+  <!-- About Button -->
+  <div id="about-btn" class="about-btn" onclick="scrollToAbout()">About</div>
+
+  <!-- Main Container -->
+  <div id="main-content" class="relative z-10 w-full max-w-4xl px-5">
+    <!-- Rounded Select Text -->
+    <div class="mx-auto mb-20 max-w-md rounded-full bg-white bg-opacity-80 px-8 py-4 text-center text-xl font-medium shadow-md">
+      Select your role to continue
+    </div>
+
+    <!-- Role Selection Cards -->
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-8">
+      <!-- Admin Card -->
+      <a href="/admin/" class="role-card bg-blue-500 hover:bg-blue-600 text-white rounded-xl w-40 h-40 flex flex-col items-center justify-center transition duration-300 ease-in-out">
+        <i class="fas fa-user-shield text-3xl mb-3"></i>
+        <span class="text-lg font-semibold">Admin</span>
+      </a>
+
+      <!-- Sponsor Card -->
+      <a href="{% url 'register' %}?role=SPONSOR" class="role-card bg-green-500 hover:bg-green-600 text-white rounded-xl w-40 h-40 flex flex-col items-center justify-center transition duration-300 ease-in-out">
+        <i class="fas fa-hand-holding-usd text-3xl mb-3"></i>
+        <span class="text-lg font-semibold">Sponsor</span>
+      </a>
+
+      <!-- Participant Card -->
+      <a href="{% url 'register' %}?role=PARTICIPANT" class="role-card bg-purple-500 hover:bg-purple-600 text-white rounded-xl w-40 h-40 flex flex-col items-center justify-center transition duration-300 ease-in-out">
+        <i class="fas fa-users text-3xl mb-3"></i>
+        <span class="text-lg font-semibold">Participant</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div id="about-section">
+    <h2 class="gradient-text text-2xl font-bold mb-4">About Devnovate</h2>
+    <p class="text-gray-700 mb-4">
+      Devnovate is a dynamic platform designed to bring together innovators, sponsors, and participants for exciting hackathons and tech events. Here's what we offer:
+    </p>
+    <ul class="list-disc list-inside text-gray-700 space-y-2">
+      <li>Seamless role-based access for Admins, Sponsors, and Participants.</li>
+      <li>Opportunities for sponsors to showcase their brands with logo spotlights.</li>
+      <li>Engaging hackathon events with national and regional levels.</li>
+      <li>Real-time project collaboration and team management tools.</li>
+      <li>Secure and user-friendly registration and profile management.</li>
+      <li>Exciting prizes and recognition for top participants.</li>
+    </ul>
+    <button onclick="scrollToTop()" class="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Back to Top</button>
+  </div>
+
+  <script>
+    const bgviVideo = document.getElementById('bgvi-video');
+    const bgv1Video = document.getElementById('bgv1-video');
+    const mainContent = document.getElementById('main-content');
+    const header = document.getElementById('header');
+    const aboutBtn = document.getElementById('about-btn');
+    const aboutSection = document.getElementById('about-section');
+
+    // When the first video ends, switch to the second video and reveal the content
+    bgviVideo.addEventListener('ended', () => {
+      bgviVideo.style.display = 'none';
+      bgv1Video.style.display = 'block';
+      mainContent.style.opacity = 1;
+      header.style.opacity = 1;
+    });
+
+    // Toggle About Section
+    aboutBtn.addEventListener('click', () => {
+      aboutSection.style.display = aboutSection.style.display === 'block' ? 'none' : 'block';
+      if (aboutSection.style.display === 'block') {
+        aboutSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    // Scroll to Top Function
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      aboutSection.style.display = 'none';
+    }
+
+    // Function to scroll to About Section
+    function scrollToAbout() {
+      aboutSection.style.display = 'block';
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
